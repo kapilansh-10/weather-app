@@ -1,13 +1,21 @@
-export default function SearchBar({ city, setCity, handleSearch}) {
+export default function SearchBar({ city, setCity, handleSearch, loading }) {
+    const onSubmit = (e) => {
+        e.preventDefault();
+        handleSearch();
+    };
     return (
-        <div>
+        <form onSubmit={onSubmit} className="search-bar" role="search" aria-label="City search">
             <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="Enter City Name"
+                className="input"
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Search city (e.g., London)"
+                aria-label="City"
             />
-            <button onClick={handleSearch}>Search</button>
-        </div>
-    )
+            <button className="btn" type="submit" disabled={!city.trim() || loading}>
+                {loading ? "Searching…" : "Search"}
+            </button>
+        </form>
+    );
 }
